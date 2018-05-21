@@ -1,0 +1,20 @@
+﻿@model IList<Basic.Models.ModelData>;
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+Length: @Model.Count
+
+@foreach (var data in Model)
+{
+    <p>@data.Text</p>
+}
+
+@using (Html.BeginForm("AddData", "Home", FormMethod.Post))
+{
+    <input type="submit"/>
+}
