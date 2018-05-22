@@ -24,9 +24,9 @@ namespace Basic.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddData()
+        public IActionResult AddData(ModelData data)
         {
-            state.data.Add(new ModelData(){ Text = "hi", Active = true});
+            state.data.Add(data);
 
             Console.WriteLine("AddData");
 

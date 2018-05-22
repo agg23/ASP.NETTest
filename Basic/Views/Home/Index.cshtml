@@ -11,10 +11,7 @@ Length: @Model.Count
 
 @foreach (var data in Model)
 {
-    <p>@data.Text</p>
+    <p>Text: @data.Text, Active: @data.Active</p>
 }
 
-@using (Html.BeginForm("AddData", "Home", FormMethod.Post))
-{
-    <input type="submit"/>
-}
+@{ Html.RenderPartial("AddModelData", new Basic.Models.ModelData()); }
