@@ -9,7 +9,7 @@ namespace Basic.Models
 {
     public class ModelData
     {
-        [HiddenInput(DisplayValue = false)]
+        [ScaffoldColumn(false)]
         public string Id { get; set; }
         public string Text { get; set; }
         public bool Active { get; set; }

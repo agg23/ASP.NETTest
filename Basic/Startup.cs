@@ -30,6 +30,7 @@ namespace Basic
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute("edit", "{controller=Home}/Edit/{id}", defaults: new { action = "Edit" });
                 routes.MapRoute("default", "{controller=Home}/{action=Index}");
             });
         }

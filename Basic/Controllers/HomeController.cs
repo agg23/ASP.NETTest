@@ -41,14 +41,26 @@ namespace Basic.Controllers
 
             var data = state.data.Where(d => d.Id == Id).FirstOrDefault();
 
+            if(data == null)
+            {
+                // TODO: Handle error in some way
+                return RedirectToAction("Index");
+            }
+
             Console.WriteLine(data.Text);
             return View("EditModelData", data);
         }
 
         [HttpPost]
-        public IActionResult EditData(ModelData data)
+        public IActionResult EditData(string Id, ModelData data)
         {
             var oldData = state.data.Where(d => d.Id == data.Id).FirstOrDefault();
+
+            if (oldData == null)
+            {
+                // TODO: Handle error in some way
+                return RedirectToAction("Index");
+            }
 
             oldData.Text = data.Text;
             oldData.Active = data.Active;

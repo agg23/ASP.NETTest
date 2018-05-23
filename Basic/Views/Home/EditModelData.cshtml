@@ -1,6 +1,6 @@
 ﻿@model Basic.Models.ModelData
 
-@using (Html.BeginForm((string) ViewBag.EditModelAction, "Home", FormMethod.Post))
+@using (Html.BeginForm((string)ViewBag.EditModelAction, "Home", new { id = Model.Id }, FormMethod.Post))
 {
     @Html.EditorForModel()
 
