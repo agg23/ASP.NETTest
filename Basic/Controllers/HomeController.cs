@@ -20,15 +20,38 @@ namespace Basic.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.EditModelAction = "AddData";
             return View(state.data);
         }
 
         [HttpPost]
         public IActionResult AddData(ModelData data)
         {
+            data.Id = System.Guid.NewGuid().ToString();
             state.data.Add(data);
 
             Console.WriteLine("AddData");
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Edit(string Id)
+        {
+            ViewBag.EditModelAction = "EditData";
+
+            var data = state.data.Where(d => d.Id == Id).FirstOrDefault();
+
+            Console.WriteLine(data.Text);
+            return View("EditModelData", data);
+        }
+
+        [HttpPost]
+        public IActionResult EditData(ModelData data)
+        {
+            var oldData = state.data.Where(d => d.Id == data.Id).FirstOrDefault();
+
+            oldData.Text = data.Text;
+            oldData.Active = data.Active;
 
             return RedirectToAction("Index");
         }

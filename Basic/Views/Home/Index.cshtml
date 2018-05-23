@@ -11,7 +11,9 @@ Length: @Model.Count
 
 @foreach (var data in Model)
 {
-    <p>Text: @data.Text, Active: @data.Active</p>
+<p>Text: @data.Text, Active: @data.Active @Html.ActionLink("Edit", "Edit", "Home", new { @data.Id })</p>
 }
 
-@{ Html.RenderPartial("AddModelData", new Basic.Models.ModelData()); }
+<h2>Add ModelData</h2>
+@*@{ Html.RenderPartial("EditModelData", new Basic.Models.ModelData()); }*@
+@Html.Partial("EditModelData", new Basic.Models.ModelData())
