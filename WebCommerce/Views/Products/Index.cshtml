@@ -1,7 +1,12 @@
-﻿
+﻿@model IEnumerable<WebCommerce.Models.Product>
+
 @{
     ViewData["Title"] = "Index";
 }
 
 <h2>Products</h2>
 
+@foreach (var product in Model)
+{
+    <p>@product.Name</p>
+}
