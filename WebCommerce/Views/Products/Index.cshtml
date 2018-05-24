@@ -8,5 +8,5 @@
 
 @foreach (var product in Model)
 {
-    <p>@product.Name</p>
+    <p>@product.Name @Html.ActionLink("View", "ViewProduct", new { id = product.Id })</p>
 }

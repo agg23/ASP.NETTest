@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebCommerce.Models;
 
 namespace WebCommerce.Controllers
@@ -16,15 +17,14 @@ namespace WebCommerce.Controllers
             this.context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(context.Products.ToList());
+            return View(await context.Products.ToListAsync());
         }
 
-        public IActionResult ViewProduct(string id)
+        public async Task<IActionResult> ViewProduct(int id)
         {
-            // Force pass model overload
-            return View((Object) id);
+            return View(await context.Products.Where(p => p.Id == id).FirstOrDefaultAsync());
         }
     }
 }
