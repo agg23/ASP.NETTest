@@ -11,10 +11,12 @@ namespace WebCommerce.Controllers
     public class AccountController : Controller
     {
         private UserManager<User> userManager;
+        private SignInManager<User> signInManager;
 
-        public AccountController(UserManager<User> userManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             this.userManager = userManager;
+            this.signInManager = signInManager;
         }
 
         public IActionResult Index()
@@ -30,6 +32,19 @@ namespace WebCommerce.Controllers
             if(!result.Succeeded)
             {
                 Console.WriteLine(result.Errors);
+                return RedirectToAction("AccountFailure");
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(string username, string password)
+        {
+            var result = await signInManager.PasswordSignInAsync(username, password, true, false);
+
+            if (!result.Succeeded)
+            {
                 return RedirectToAction("AccountFailure");
             }
 

@@ -5,6 +5,14 @@
 
 <h2>Account</h2>
 
-<div>
-    @Html.RenderPartialAsync("Register");
+@if(User.Identity.IsAuthenticated)
+{
+    <div>Authenticated as @User.Identities</div>
+}
+
+<div style="display: inline-block;">
+    @{ await Html.RenderPartialAsync("Register"); }
+</div>
+<div style="display: inline-block;">
+    @{ await Html.RenderPartialAsync("Login"); }
 </div>

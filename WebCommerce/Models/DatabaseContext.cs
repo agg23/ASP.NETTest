@@ -4,6 +4,11 @@ namespace WebCommerce.Models
 {
     public class DatabaseContext : DbContext
     {
+        public DbSet<Product> Products { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<ProductStock> ProductStock { get; set; }
+
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
         }
@@ -12,7 +17,8 @@ namespace WebCommerce.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<User>().Ignore(m => m.Email)
+            modelBuilder.Entity<User>()
+                   .Ignore(m => m.Email)
                    .Ignore(m => m.EmailConfirmed)
                    .Ignore(m => m.AccessFailedCount)
                    .Ignore(m => m.ConcurrencyStamp)
@@ -25,10 +31,5 @@ namespace WebCommerce.Models
                    .Ignore(m => m.SecurityStamp)
                    .Ignore(m => m.TwoFactorEnabled);
         }
-
-        public DbSet<Product> Products { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<ProductStock> ProductStock { get; set; }
     }
 }
