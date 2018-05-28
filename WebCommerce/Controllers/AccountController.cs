@@ -27,7 +27,18 @@ namespace WebCommerce.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(User user, string password)
         {
+            // Make sure username is unique
+            var previousUser = await userManager.FindByNameAsync(user.UserName);
+
+            if(previousUser != null)
+            {
+                // Username is not unique
+                return RedirectToAction("AccountFailure");
+            }
+
             var result = await userManager.CreateAsync(user, password);
+
+            await userManager.AddToRoleAsync(user, "default");
 
             if(!result.Succeeded)
             {
@@ -35,7 +46,9 @@ namespace WebCommerce.Controllers
                 return RedirectToAction("AccountFailure");
             }
 
-            return View();
+            
+
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -48,7 +61,7 @@ namespace WebCommerce.Controllers
                 return RedirectToAction("AccountFailure");
             }
 
-            return View();
+            return RedirectToAction("Index");
         }
 
         public IActionResult AccountFailure()

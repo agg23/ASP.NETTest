@@ -10,6 +10,8 @@
     <div>Authenticated as @User.Identities</div>
 }
 
+@User.Identity.IsAuthenticated
+
 <div style="display: inline-block;">
     @{ await Html.RenderPartialAsync("Register"); }
 </div>
