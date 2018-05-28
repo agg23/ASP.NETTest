@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebCommerce.Models;
+using WebCommerce.Models.Users;
 
 namespace WebCommerce
 {
@@ -32,7 +34,26 @@ namespace WebCommerce
             services.AddMvc();
 
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DBConnection")));
-            //services.AddDbContext<DatabaseContext>(options => options.UseSql);
+
+            // Configure authentication
+            services.AddIdentity<User, UserRole>().AddEntityFrameworkStores<DatabaseContext>();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequiredLength = 5;
+                options.Password.RequiredUniqueChars = 1;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireUppercase = false;
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+
+                options.LoginPath = "/Account/Login";
+                options.AccessDeniedPath = "/Account/Invalid";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,9 +66,11 @@ namespace WebCommerce
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute("Default", "{controller=Products}", new { action = "Index" });
+                routes.MapRoute("Default", "{controller=Products}/{action}", new { action = "Index" });
                 routes.MapRoute("AccessProducts", "Products/{id}/{action?}", new { controller = "Products", action = "ViewProduct" });
             });
+
+            app.UseAuthentication();
         }
     }
 }

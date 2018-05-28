@@ -1,0 +1,20 @@
+﻿@model WebCommerce.Models.User
+
+<h2>Register</h2>
+
+@using (Html.BeginForm("Register", "Account"))
+{
+    @Html.LabelFor(m => m.Name);
+    @Html.EditorFor(m => m.Name);
+
+    @Html.LabelFor(m => m.Address);
+    @Html.EditorFor(m => m.Address);
+
+    @Html.LabelFor(m => m.UserName);
+    @Html.EditorFor(m => m.UserName);
+
+    @Html.Label("Password");
+    @Html.Editor("Password");
+
+    <input type="submit" />
+}
